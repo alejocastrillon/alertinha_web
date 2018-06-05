@@ -60,7 +60,12 @@ class Alertas {
             $query = $conn->getConnection()->prepare("SELECT * FROM alertas");
             $query->execute();
             $conn->closeConnection();
-            return $query->fetchAll(PDO::FETCH_CLASS, __CLASS__);
+            $data = array();
+            while ($row = $query->fetchObject()) {
+                $data[] = $row;
+            }
+            print_r(json_encode($data));
+            //return $query->fetchAll(PDO::FETCH_CLASS, __CLASS__);
         } catch (PDOException $e) {
             echo "Error al conseguir los platos ... ".$e->getMessage();
             die();
